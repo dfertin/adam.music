@@ -26,35 +26,28 @@ export default function Artists() {
 
   if (loading) {
     return (
-      <div className="adam-container" style={{ padding: '3rem' }}>
-        <div className="adam-spinner" style={{ margin: '0 auto' }} />
+      <div className="adam-container adam-pad-4">
+        <div className="adam-spinner" />
       </div>
     );
   }
 
   return (
-    <div className="adam-container" style={{ padding: '2rem 0' }}>
+    <div className="adam-container adam-pad-2">
       <h1 className="adam-h1">Артисты</h1>
-      <div
-        style={{
-          marginTop: '1.5rem',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '1.25rem',
-        }}
-      >
+      <div className="artists-grid">
         {artists.map((a) => (
-          <Link key={a._id} to={`/artists/${a._id}`} className="adam-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ aspectRatio: '1', background: '#e8e6df', overflow: 'hidden' }}>
+          <Link key={a._id} to={`/artists/${a._id}`} className="adam-card album-card-link">
+            <div className="artist-card-cover">
               {a.image ? (
-                <img src={a.image} alt="" width={400} height={400} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={a.image} alt="" width={400} height={400} loading="lazy" className="artist-card-img" />
               ) : (
-                <div style={{ height: '100%', display: 'grid', placeItems: 'center', color: 'var(--adam-muted)' }}>♪</div>
+                <div className="artist-card-fallback">♪</div>
               )}
             </div>
-            <div style={{ padding: '1rem' }}>
-              <div style={{ fontWeight: 600 }}>{a.name}</div>
-              {a.bio ? <p style={{ fontSize: '0.9rem', color: 'var(--adam-muted)', margin: '0.35rem 0 0' }}>{a.bio.slice(0, 80)}…</p> : null}
+            <div className="artist-card-body">
+              <div className="album-card-title">{a.name}</div>
+              {a.bio ? <p className="muted-text">{a.bio.slice(0, 80)}…</p> : null}
             </div>
           </Link>
         ))}

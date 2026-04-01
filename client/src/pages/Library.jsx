@@ -57,46 +57,29 @@ function PlaylistTrackAdd({ playlistId, existingIds, onAdded }) {
   }
 
   return (
-    <div style={{ marginTop: '0.75rem' }}>
-      <button type="button" className="adam-btn adam-btn--minimal" style={{ fontSize: '0.78rem', padding: '0.45rem 0.85rem' }} onClick={() => setOpen((v) => !v)}>
+    <div className="library-top-gap">
+      <button type="button" className="adam-btn adam-btn--minimal adam-btn--xs" onClick={() => setOpen((v) => !v)}>
         {open ? 'Скрыть поиск' : '+ Добавить треки'}
       </button>
       {open && (
-        <div className="adam-glass" style={{ marginTop: '0.65rem', padding: '0.85rem', borderRadius: 'var(--radius-md)' }}>
+        <div className="adam-glass library-add-wrap">
           <input
             className="adam-input"
             placeholder="Название трека или артист…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            style={{ marginBottom: '0.65rem' }}
           />
           {loading ? (
-            <div className="adam-spinner" style={{ width: '1.75rem', height: '1.75rem', margin: '0.5rem auto' }} />
+            <div className="adam-spinner" />
           ) : (
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, maxHeight: 200, overflowY: 'auto' }}>
+            <ul className="plain-list library-scroll-list">
               {filtered.map((t) => (
-                <li
-                  key={t._id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.4rem 0',
-                    borderBottom: '1px solid var(--adam-border)',
-                    fontSize: '0.88rem',
-                  }}
-                >
-                  <span style={{ minWidth: 0 }}>
+                <li key={t._id} className="library-track-option">
+                  <span>
                     {t.title}
-                    <span style={{ color: 'var(--adam-muted)' }}> — {t.artist?.name}</span>
+                    <span className="muted-text"> — {t.artist?.name}</span>
                   </span>
-                  <button
-                    type="button"
-                    className="adam-btn adam-btn--minimal"
-                    style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem', flexShrink: 0 }}
-                    onClick={() => addTrack(t._id)}
-                  >
+                  <button type="button" className="adam-btn adam-btn--minimal" onClick={() => addTrack(t._id)}>
                     +
                   </button>
                 </li>
@@ -185,32 +168,31 @@ export default function Library() {
 
   if (loading) {
     return (
-      <div className="adam-container" style={{ padding: '4rem 0' }}>
-        <div className="adam-spinner" style={{ margin: '0 auto' }} />
+      <div className="adam-container adam-pad-4">
+        <div className="adam-spinner" />
       </div>
     );
   }
 
   return (
-    <div className="adam-container" style={{ padding: '2rem 0 3rem' }}>
-      <p className="adam-eyebrow" style={{ margin: '0 0 0.35rem' }}>
+    <div className="adam-container adam-pad-2">
+      <p className="adam-eyebrow">
         Коллекция
       </p>
-      <h1 className="adam-h1" style={{ marginBottom: '0.5rem' }}>
+      <h1 className="adam-h1">
         Библиотека
       </h1>
-      <p className="adam-lead" style={{ marginBottom: '2rem' }}>
+      <p className="adam-lead">
         Плейлисты и избранное. Создайте плейлист и добавляйте треки по одному из каталога или со страницы альбома.
       </p>
 
-      <section style={{ marginBottom: '2.75rem' }}>
-        <h2 className="adam-h2" style={{ marginBottom: '1rem' }}>
+      <section className="search-sections">
+        <h2 className="adam-h2">
           Плейлисты
         </h2>
-        <form onSubmit={createPlaylist} style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+        <form onSubmit={createPlaylist} className="search-form">
           <input
-            className="adam-input"
-            style={{ maxWidth: 300, flex: '1 1 200px' }}
+            className="adam-input search-input-grow"
             placeholder="Название нового плейлиста"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
@@ -219,62 +201,33 @@ export default function Library() {
             Создать
           </button>
         </form>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <div className="search-sections">
           {playlists.map((pl) => {
             const ids = new Set((pl.tracks || []).map((t) => String(t._id)));
             return (
-              <div key={pl._id} className="adam-glass" style={{ padding: '1.15rem 1.35rem', borderRadius: 'var(--radius-lg)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+              <div key={pl._id} className="adam-glass artist-card-body">
+                <div className="discover-header">
                   <div>
-                    <div className="adam-eyebrow" style={{ marginBottom: '0.35rem' }}>
+                    <div className="adam-eyebrow">
                       Плейлист
                     </div>
-                    <div className="adam-display" style={{ fontSize: '1.15rem' }}>
+                    <div className="adam-display">
                       {pl.name}
                     </div>
                   </div>
-                  <button type="button" className="adam-btn adam-btn--minimal" style={{ fontSize: '0.78rem' }} onClick={() => removePlaylist(pl._id)}>
+                  <button type="button" className="adam-btn adam-btn--minimal" onClick={() => removePlaylist(pl._id)}>
                     Удалить
                   </button>
                 </div>
                 <PlaylistTrackAdd playlistId={pl._id} existingIds={ids} onAdded={() => refreshPlaylist(pl._id)} />
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0.85rem 0 0' }}>
+                <ul className="plain-list">
                   {(pl.tracks || []).map((t) => (
-                    <li
-                      key={t._id}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        gap: '0.65rem',
-                        padding: '0.45rem 0',
-                        borderBottom: '1px solid var(--adam-border)',
-                        fontSize: '0.9rem',
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => playTrack(t, pl.tracks)}
-                        style={{
-                          border: 'none',
-                          background: 'none',
-                          padding: 0,
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          color: 'inherit',
-                          flex: 1,
-                          minWidth: 0,
-                        }}
-                      >
-                        <span style={{ fontWeight: 600 }}>{t.title}</span>
-                        <span style={{ color: 'var(--adam-muted)' }}> — {t.artist?.name}</span>
+                    <li key={t._id} className="track-row">
+                      <button type="button" onClick={() => playTrack(t, pl.tracks)} className="track-row__title-btn">
+                        <span className="album-card-title">{t.title}</span>
+                        <span className="muted-text"> — {t.artist?.name}</span>
                       </button>
-                      <button
-                        type="button"
-                        className="adam-btn adam-btn--minimal"
-                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.72rem' }}
-                        onClick={() => removeTrackFromPlaylist(pl._id, t._id)}
-                      >
+                      <button type="button" className="adam-btn adam-btn--minimal" onClick={() => removeTrackFromPlaylist(pl._id, t._id)}>
                         Убрать
                       </button>
                     </li>
@@ -287,31 +240,20 @@ export default function Library() {
       </section>
 
       <section>
-        <h2 className="adam-h2" style={{ marginBottom: '1rem' }}>
+        <h2 className="adam-h2">
           Избранное
         </h2>
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+        <ul className="plain-list">
           {favorites.map((f) => {
             const t = f.track;
             if (!t) return null;
             return (
-              <li
-                key={f._id}
-                className="adam-card"
-                style={{
-                  padding: '0.85rem 1rem',
-                  marginBottom: '0.5rem',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                }}
-              >
-                <span style={{ fontSize: '0.92rem' }}>
-                  <span style={{ fontWeight: 600 }}>{t.title}</span>
-                  <span style={{ color: 'var(--adam-muted)' }}> — {t.artist?.name}</span>
+              <li key={f._id} className="track-row adam-card">
+                <span>
+                  <span className="album-card-title">{t.title}</span>
+                  <span className="muted-text"> — {t.artist?.name}</span>
                 </span>
-                <button type="button" className="adam-btn adam-btn--ghost" style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }} onClick={() => playTrack(t, [t])}>
+                <button type="button" className="adam-btn adam-btn--ghost adam-btn--xs" onClick={() => playTrack(t, [t])}>
                   ▶
                 </button>
               </li>

@@ -34,9 +34,7 @@ export default function Album() {
               const ids = new Set(favs.map((f) => String(f.track?._id || f.track)));
               setFavSet(ids);
             }
-          } catch {
-            /* ignore */
-          }
+          } catch {}
         }
       } catch (e) {
         toast.error(e.message || 'Альбом не найден');
@@ -98,8 +96,8 @@ export default function Album() {
 
   if (loading || !album) {
     return (
-      <div className="adam-container" style={{ padding: '3rem' }}>
-        <div className="adam-spinner" style={{ margin: '0 auto' }} />
+      <div className="adam-container adam-pad-4">
+        <div className="adam-spinner" />
       </div>
     );
   }
@@ -107,69 +105,51 @@ export default function Album() {
   const cover = album.coverUrl || 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800';
 
   return (
-    <div className="adam-container" style={{ padding: '2rem 0' }}>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(200px, 320px) 1fr',
-          gap: '2rem',
-          alignItems: 'start',
-        }}
-        className="album-hero"
-      >
-        <div className="adam-card" style={{ padding: 0 }}>
-          <img src={cover} alt="" width={640} height={640} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover' }} loading="eager" />
+    <div className="adam-container adam-pad-2">
+      <div className="album-hero">
+        <div className="adam-card">
+          <img src={cover} alt="" width={640} height={640} className="album-cover" loading="eager" />
         </div>
         <div>
-          <p className="adam-eyebrow" style={{ margin: 0 }}>
-            {album.genre || 'Альбом'}
-          </p>
-          <h1 className="adam-h1" style={{ margin: '0.5rem 0' }}>
+          <p className="adam-eyebrow">{album.genre || 'Альбом'}</p>
+          <h1 className="adam-h1 album-top-gap">
             {album.title}
           </h1>
-          <p style={{ fontSize: '1.05rem', letterSpacing: '0.02em' }}>{album.artist?.name}</p>
-          {album.year ? <p style={{ color: 'var(--adam-muted)' }}>{album.year}</p> : null}
-          <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem', alignItems: 'center' }}>
+          <p className="discover-sub album-sub-gap">
+            {album.artist?.name}
+          </p>
+          {album.year ? <p className="discover-sub">{album.year}</p> : null}
+          <div className="landing-actions album-actions-gap">
             <VinylDisc size={72} spinning={false} label="LP" />
-            <span style={{ color: 'var(--adam-muted)', fontSize: '0.95rem' }}>Виниловая подача — слушайте треки ниже.</span>
+            <span className="discover-sub">Виниловая подача — слушайте треки ниже.</span>
           </div>
         </div>
       </div>
 
-      <section style={{ marginTop: '2.5rem' }}>
+      <section className="section-gap">
         <h2 className="adam-h2">Треки</h2>
-        <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0 0' }}>
+        <ul className="album-tracks">
           {(album.tracks || []).map((t, i) => (
-            <li
-              key={t._id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '1rem',
-                padding: '0.65rem 0',
-                borderBottom: '1px solid var(--adam-border)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <span style={{ color: 'var(--adam-muted)', width: '1.5rem' }}>{i + 1}</span>
-                <button
-                  type="button"
-                  className="adam-btn adam-btn--ghost"
-                  style={{ padding: '0.35rem 0.75rem' }}
-                  onClick={() => playTrack(t, album.tracks)}
-                >
+            <li key={t._id} className="album-track">
+              <div className="album-track__idx">{String(i + 1).padStart(2, '0')}</div>
+              <div className="min-w-0">
+                <button type="button" className="adam-btn adam-btn--ghost track-play-btn" onClick={() => playTrack(t, album.tracks)}>
                   ▶
                 </button>
-                <span style={{ fontWeight: 500 }}>{t.title}</span>
+                <span className="album-track__title">{t.title}</span>
+                <div className="album-track__meta">{album.artist?.name}</div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                <span style={{ color: 'var(--adam-muted)', fontSize: '0.85rem', fontVariantNumeric: 'tabular-nums' }}>
+              <div className="album-track__album">{album.title}</div>
+              <div className="album-track__plays">
+                —
+              </div>
+              <div className="track-row__actions">
+                <div className="album-track__duration">
                   {t.durationSec ? `${Math.floor(t.durationSec / 60)}:${String(t.durationSec % 60).padStart(2, '0')}` : ''}
-                </span>
+                </div>
                 <AddToPlaylist trackId={t._id} compact />
-                <button type="button" className="adam-btn adam-btn--minimal" style={{ padding: '0.3rem 0.55rem' }} onClick={() => toggleFavorite(t._id)}>
-                  {favSet.has(String(t._id)) ? '★' : '☆'}
+                <button type="button" className="adam-btn adam-btn--minimal" onClick={() => toggleFavorite(t._id)}>
+                  {favSet.has(String(t._id)) ? '♥' : '♡'}
                 </button>
               </div>
             </li>
@@ -177,11 +157,11 @@ export default function Album() {
         </ul>
       </section>
 
-      <section style={{ marginTop: '2.5rem' }}>
+      <section className="section-gap">
         <h2 className="adam-h2">Отзывы</h2>
         {isAuthenticated ? (
-          <form onSubmit={submitReview} style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: 480 }}>
-            <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+          <form onSubmit={submitReview} className="form-col review-form">
+            <label className="label-col">
               <span>Оценка (1–5)</span>
               <input
                 className="adam-input"
@@ -192,33 +172,26 @@ export default function Album() {
                 onChange={(e) => setRating(Number(e.target.value))}
               />
             </label>
-            <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+            <label className="label-col">
               <span>Комментарий</span>
               <textarea className="adam-input" rows={3} value={text} onChange={(e) => setText(e.target.value)} />
             </label>
-            <button type="submit" className="adam-btn" style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="adam-btn">
               Отправить
             </button>
           </form>
         ) : (
-          <p style={{ color: 'var(--adam-muted)' }}>Войдите, чтобы оставить отзыв.</p>
+          <p className="discover-sub">Войдите, чтобы оставить отзыв.</p>
         )}
-        <ul style={{ listStyle: 'none', padding: 0, marginTop: '1.5rem' }}>
+        <ul className="plain-list section-gap-sm">
           {reviews.map((r) => (
-            <li key={r._id} className="adam-card" style={{ padding: '1rem 1.25rem', marginBottom: '0.75rem' }}>
+            <li key={r._id} className="adam-card review-item">
               <strong>{r.rating}★</strong> — {r.user?.name || r.user?.email || 'Пользователь'}
-              {r.text ? <p style={{ margin: '0.5rem 0 0', color: 'var(--adam-muted)' }}>{r.text}</p> : null}
+              {r.text ? <p className="discover-sub review-text">{r.text}</p> : null}
             </li>
           ))}
         </ul>
       </section>
-      <style>{`
-        @media (max-width: 768px) {
-          .album-hero {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }

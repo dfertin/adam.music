@@ -26,21 +26,21 @@ export default function Register() {
   }
 
   return (
-    <div className="adam-container" style={{ maxWidth: 420, padding: '2rem 0' }}>
+    <div className="adam-container adam-pad-2 auth-wrap">
       <h1 className="adam-h1">Регистрация</h1>
-      <p style={{ color: 'var(--adam-muted)' }}>
+      <p className="muted-text">
         Уже есть аккаунт? <Link to="/login">Вход</Link>
       </p>
-      <form onSubmit={onSubmit} style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+      <form onSubmit={onSubmit} className="form-col">
+        <label className="label-col">
           <span>Имя</span>
           <input className="adam-input" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
         </label>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-          <span>Email</span>
+        <label className="label-col">
+          <span>Эл. почта</span>
           <input className="adam-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
         </label>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+        <label className="label-col">
           <span>Пароль</span>
           <input
             className="adam-input"
@@ -52,7 +52,7 @@ export default function Register() {
             autoComplete="new-password"
           />
         </label>
-        <button type="submit" className="adam-btn" disabled={loading} style={{ marginTop: '0.5rem' }}>
+        <button type="submit" className="adam-btn" disabled={loading}>
           {loading ? 'Создание…' : 'Создать аккаунт'}
         </button>
       </form>

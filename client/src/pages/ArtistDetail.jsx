@@ -32,50 +32,34 @@ export default function ArtistDetail() {
 
   if (loading || !artist) {
     return (
-      <div className="adam-container" style={{ padding: '3rem' }}>
-        <div className="adam-spinner" style={{ margin: '0 auto' }} />
+      <div className="adam-container adam-pad-4">
+        <div className="adam-spinner" />
       </div>
     );
   }
 
   return (
-    <div className="adam-container" style={{ padding: '2rem 0' }}>
-      <Link to="/artists" style={{ fontSize: '0.95rem' }}>
+    <div className="adam-container adam-pad-2">
+      <Link to="/artists" className="muted-text">
         ← Все артисты
       </Link>
-      <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div
-          style={{
-            width: 140,
-            height: 140,
-            borderRadius: '50%',
-            overflow: 'hidden',
-            background: '#e8e6df',
-            flexShrink: 0,
-          }}
-        >
+      <div className="artist-detail-head">
+        <div className="artist-avatar">
           {artist.image ? (
-            <img src={artist.image} alt="" width={280} height={280} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={artist.image} alt="" width={280} height={280} />
           ) : null}
         </div>
         <div>
-          <h1 className="adam-h1" style={{ margin: 0 }}>
+          <h1 className="adam-h1">
             {artist.name}
           </h1>
-          {artist.bio ? <p style={{ color: 'var(--adam-muted)', maxWidth: '56ch' }}>{artist.bio}</p> : null}
+          {artist.bio ? <p className="muted-text">{artist.bio}</p> : null}
         </div>
       </div>
-      <h2 className="adam-h2" style={{ marginTop: '2rem' }}>
+      <h2 className="adam-h2 section-gap">
         Альбомы
       </h2>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-          gap: '1.25rem',
-          marginTop: '1rem',
-        }}
-      >
+      <div className="album-grid">
         {albums.map((album) => (
           <AlbumCard key={album._id} album={album} />
         ))}

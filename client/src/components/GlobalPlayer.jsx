@@ -18,49 +18,21 @@ export function GlobalPlayer() {
   const hasNext = idx >= 0 && idx < queue.length - 1;
 
   return (
-    <div
-      className="adam-glass"
-      style={{
-        position: 'fixed',
-        bottom: '0.75rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 50,
-        width: 'min(920px, calc(100% - 1.5rem))',
-        padding: '0.65rem 1rem 0.85rem',
-        borderRadius: 'var(--radius-lg)',
-      }}
-    >
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 1.4fr)',
-          gap: '1rem',
-          alignItems: 'center',
-        }}
-        className="adam-player-grid"
-      >
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', minWidth: 0 }}>
+    <div className="adam-glass adam-global-player">
+      <div className="adam-player-grid">
+        <div className="adam-player-left">
           <VinylDisc size={52} spinning={playing} label="♪" />
-          <div style={{ minWidth: 0 }}>
-            <div
-              className="adam-display"
-              style={{
-                fontSize: '0.92rem',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
+          <div className="adam-player-meta">
+            <div className="adam-display adam-player-title">
               {current.title}
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--adam-muted)', letterSpacing: '0.04em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div className="adam-player-artist">
               {current.artist?.name || '—'}
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.35rem' }}>
+        <div className="adam-player-right">
+          <div className="adam-player-controls">
             <button
               type="button"
               className="adam-btn adam-btn--icon adam-btn--minimal"
@@ -71,7 +43,7 @@ export function GlobalPlayer() {
             >
               ‹
             </button>
-            <button type="button" className="adam-btn adam-btn--icon" style={{ width: '2.65rem', height: '2.65rem' }} onClick={() => toggle()} aria-label={playing ? 'Пауза' : 'Играть'}>
+            <button type="button" className="adam-btn adam-btn--icon adam-player-play" onClick={() => toggle()} aria-label={playing ? 'Пауза' : 'Играть'}>
               {playing ? '⏸' : '▶'}
             </button>
             <button
@@ -84,7 +56,7 @@ export function GlobalPlayer() {
             >
               ›
             </button>
-            <span style={{ fontSize: '0.72rem', color: 'var(--adam-faint)', marginLeft: '0.35rem', fontVariantNumeric: 'tabular-nums' }}>
+            <span className="adam-player-time">
               {formatTime(currentTime)} / {formatTime(duration)}
             </span>
           </div>
@@ -96,35 +68,15 @@ export function GlobalPlayer() {
               const x = e.clientX - rect.left;
               seek(x / rect.width);
             }}
-            style={{
-              width: '100%',
-              height: 5,
-              borderRadius: 999,
-              border: 'none',
-              padding: 0,
-              cursor: 'pointer',
-              background: 'rgba(20,19,18,0.08)',
-            }}
+            className="adam-player-progress"
           >
             <div
-              style={{
-                height: '100%',
-                width: `${ratio * 100}%`,
-                borderRadius: 999,
-                background: 'var(--adam-accent)',
-                pointerEvents: 'none',
-              }}
+              className="adam-player-progress__bar"
+              style={{ width: `${ratio * 100}%` }}
             />
           </button>
         </div>
       </div>
-      <style>{`
-        @media (max-width: 640px) {
-          .adam-player-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }

@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { api } from '../api/client.js';
 import { useAuth } from '../context/AuthContext.jsx';
-import { AlbumCard } from '../components/AlbumCard.jsx';
+import { usePlayer } from '../context/PlayerContext.jsx';
+import { VinylDisc } from '../components/VinylDisc.jsx';
 
 export default function Home() {
   const { isAuthenticated, user } = useAuth();
+  const { playTrack } = usePlayer();
   const [albums, setAlbums] = useState([]);
-  const [playlists, setPlaylists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [playingAlbumId, setPlayingAlbumId] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -17,16 +19,6 @@ export default function Home() {
       try {
         const albumData = await api('/albums');
         if (!cancelled) setAlbums(albumData);
-        if (isAuthenticated) {
-          try {
-            const pl = await api('/playlists');
-            if (!cancelled) setPlaylists(pl);
-          } catch {
-            /* ignore */
-          }
-        } else if (!cancelled) {
-          setPlaylists([]);
-        }
       } catch (e) {
         toast.error(e.message || 'Не удалось загрузить данные');
       } finally {
@@ -40,97 +32,89 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="adam-container" style={{ padding: '4rem 0' }}>
-        <div className="adam-spinner" style={{ margin: '0 auto' }} />
+      <div className="adam-container adam-pad-4">
+        <div className="adam-spinner" />
       </div>
     );
   }
 
   const firstName = user?.name?.trim()?.split(/\s+/)[0] || '';
+  const reco = albums[0];
+  const trending = albums.slice(1, 5);
+
+  async function playAlbumFirstTrack(album) {
+    if (!album?._id) return;
+    try {
+      setPlayingAlbumId(album._id);
+      const fullAlbum = await api(`/albums/${album._id}`);
+      const tracks = Array.isArray(fullAlbum?.tracks) ? fullAlbum.tracks : [];
+      const first = tracks[0];
+      if (!first?.audioUrl) {
+        toast.error('В этом альбоме пока нет доступных треков');
+        return;
+      }
+      playTrack(first, tracks);
+    } catch (e) {
+      toast.error(e.message || 'Не удалось запустить трек');
+    } finally {
+      setPlayingAlbumId('');
+    }
+  }
 
   return (
-    <div className="adam-container" style={{ padding: '2rem 0 3rem' }}>
-      <header
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          gap: '1rem',
-          marginBottom: '2.25rem',
-        }}
-      >
+    <div className="adam-container adam-pad-2">
+      <header className="discover-header">
         <div>
-          {isAuthenticated && firstName ? (
-            <p className="adam-eyebrow" style={{ margin: '0 0 0.35rem' }}>
-              Добро пожаловать
-            </p>
-          ) : (
-            <p className="adam-eyebrow" style={{ margin: '0 0 0.35rem' }}>
-              Каталог
-            </p>
-          )}
-          <h1 className="adam-h1">
-            {isAuthenticated && firstName ? `Привет, ${firstName}` : 'Открытия для вас'}
-          </h1>
-          <p className="adam-lead" style={{ marginTop: '0.5rem', marginBottom: 0 }}>
-            Подборка релизов и ваши плейлисты — в одном спокойном экране.
-          </p>
+          <h1 className="adam-h1">{isAuthenticated && firstName ? `Добрый вечер, ${firstName}` : 'Добрый вечер'}</h1>
+          <p className="discover-sub">Что вы хотите послушать?</p>
+          <div className="discover-search">
+            <input className="adam-input" placeholder="Поиск песен, исполнителей, альбомов..." aria-label="Поиск" />
+          </div>
         </div>
-        <Link to="/search" className="adam-btn adam-btn--ghost" style={{ flexShrink: 0 }}>
-          Найти трек
-        </Link>
       </header>
 
-      {isAuthenticated && playlists.length > 0 && (
-        <section style={{ marginBottom: '2.75rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-            <h2 className="adam-h2">Мои плейлисты</h2>
-            <Link to="/library" className="adam-eyebrow" style={{ color: 'var(--adam-accent)', textDecoration: 'none' }}>
-              Управление →
+      <div className="discover-grid">
+        {reco ? (
+          <section className="discover-reco" aria-label="Рекомендованный альбом">
+            <div>
+              <div className="adam-eyebrow">Рекомендованный альбом</div>
+              <div className="discover-reco__title">{reco.title}</div>
+              <div className="discover-reco__meta">{reco.artist?.name || '—'}</div>
+              <div className="discover-reco__actions">
+                <button type="button" className="adam-btn" disabled={playingAlbumId === reco._id} onClick={() => playAlbumFirstTrack(reco)}>
+                  {playingAlbumId === reco._id ? 'Загрузка...' : '▶ Слушать сейчас'}
+                </button>
+              </div>
+            </div>
+            <div className="discover-reco__vinyl" aria-hidden>
+              <VinylDisc size={110} spinning={false} label="A" />
+            </div>
+          </section>
+        ) : null}
+
+        <section aria-label="Популярное сейчас">
+          <div className="trending-head">
+            <h2 className="adam-h2">Популярное сейчас</h2>
+            <Link to="/search" className="adam-eyebrow muted-link">
+              Далее →
             </Link>
           </div>
-          <div className="adam-scroll-row">
-            {playlists.map((pl) => (
-              <article key={pl._id} className="playlist-strip-card">
-                <div className="adam-eyebrow" style={{ marginBottom: '0.5rem', color: 'var(--adam-faint)' }}>
-                  Плейлист
+          <div className="trending-grid">
+            {trending.map((a) => (
+              <article key={a._id} className="trending-card">
+                <div className="trending-card__top">
+                  <div className="trending-card__dot" aria-hidden />
+                  <button type="button" className="trending-card__play" aria-label="Играть" disabled={playingAlbumId === a._id} onClick={() => playAlbumFirstTrack(a)}>
+                    ▶
+                  </button>
                 </div>
-                <div className="adam-display" style={{ fontSize: '1.05rem', marginBottom: '0.35rem' }}>
-                  {pl.name}
-                </div>
-                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--adam-muted)' }}>
-                  {(pl.tracks || []).length} {pl.tracks?.length === 1 ? 'трек' : 'треков'}
-                </p>
-                <Link
-                  to="/library"
-                  className="adam-btn adam-btn--minimal"
-                  style={{ marginTop: '1rem', width: '100%', justifyContent: 'center', fontSize: '0.78rem', padding: '0.5rem' }}
-                >
-                  Открыть
-                </Link>
+                <div className="trending-card__name">{a.title}</div>
+                <div className="trending-card__meta">{a.artist?.name || '—'}</div>
               </article>
             ))}
           </div>
         </section>
-      )}
-
-      <section>
-        <h2 className="adam-h2" style={{ marginBottom: '1.25rem' }}>
-          Новинки и релизы
-        </h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
-            gap: '1.35rem',
-          }}
-        >
-          {albums.map((a) => (
-            <AlbumCard key={a._id} album={a} />
-          ))}
-        </div>
-      </section>
+      </div>
     </div>
   );
 }

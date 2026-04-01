@@ -10,13 +10,14 @@ import { favoritesRouter } from './routes/favorites.js';
 import { reviewsRouter } from './routes/reviews.js';
 import { playlistsRouter } from './routes/playlists.js';
 import { searchRouter } from './routes/search.js';
+import { statsRouter } from './routes/stats.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
     credentials: true,
   })
 );
@@ -34,6 +35,7 @@ app.use('/api/favorites', favoritesRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/playlists', playlistsRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/stats', statsRouter);
 
 app.use((err, _req, res, _next) => {
   console.error(err);
@@ -58,8 +60,17 @@ async function main() {
     process.exit(1);
   }
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`ADAM API: http://localhost:${PORT}`);
+  });
+
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE') {
+      console.error(`Порт ${PORT} уже занят. Закройте процесс на этом порту или запустите сервер с PORT=другой_порт.`);
+      process.exit(1);
+    }
+    console.error(err);
+    process.exit(1);
   });
 }
 

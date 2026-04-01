@@ -25,17 +25,17 @@ export default function Login() {
   }
 
   return (
-    <div className="adam-container" style={{ maxWidth: 420, padding: '2rem 0' }}>
+    <div className="adam-container adam-pad-2 auth-wrap">
       <h1 className="adam-h1">Вход</h1>
-      <p style={{ color: 'var(--adam-muted)' }}>
+      <p className="muted-text">
         Нет аккаунта? <Link to="/register">Регистрация</Link>
       </p>
-      <form onSubmit={onSubmit} style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-          <span>Email</span>
+      <form onSubmit={onSubmit} className="form-col">
+        <label className="label-col">
+          <span>Эл. почта</span>
           <input className="adam-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
         </label>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+        <label className="label-col">
           <span>Пароль</span>
           <input
             className="adam-input"
@@ -46,7 +46,7 @@ export default function Login() {
             autoComplete="current-password"
           />
         </label>
-        <button type="submit" className="adam-btn" disabled={loading} style={{ marginTop: '0.5rem' }}>
+        <button type="submit" className="adam-btn">
           {loading ? 'Вход…' : 'Войти'}
         </button>
       </form>

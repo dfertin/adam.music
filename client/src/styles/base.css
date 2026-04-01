@@ -1,0 +1,85 @@
+:root {
+  --adam-bg: #f5f3ec;
+  --adam-surface: rgba(255, 254, 248, 0.72);
+  --adam-surface-solid: #fffef8;
+  --adam-ink: #141312;
+  --adam-muted: #6b6860;
+  --adam-faint: #9c9890;
+  --adam-accent: #2d6a2d;
+  --adam-accent-soft: rgba(45, 106, 45, 0.1);
+  --adam-accent-hover: #245a24;
+  --adam-border: rgba(20, 19, 18, 0.08);
+  --adam-glass-border: rgba(255, 255, 255, 0.65);
+  --adam-vinyl: #1a1a1a;
+  --radius-lg: 28px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 24px 60px rgba(20, 19, 18, 0.06);
+  --shadow-glass: 0 8px 32px rgba(20, 19, 18, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Syne', var(--font-sans);
+
+  font-family: var(--font-sans);
+  color: var(--adam-ink);
+  background: var(--adam-bg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse 900px 500px at 50% -20%, rgba(45, 106, 45, 0.07), transparent),
+    radial-gradient(ellipse 700px 400px at 100% 50%, rgba(92, 90, 84, 0.05), transparent), var(--adam-bg);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.adam-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--adam-muted);
+}
+
+.adam-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.adam-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.adam-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.adam-lead {
+  font-size: 1.02rem;
+  color: var(--adam-muted);
+  max-width: 38ch;
+  line-height: 1.65;
+}
+
