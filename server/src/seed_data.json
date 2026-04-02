@@ -1,0 +1,248 @@
+{
+  "artists": [
+    {
+      "_id": "69c8ce57f4a47e20fb15bd7d",
+      "name": "Lumen Echo",
+      "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400",
+      "bio": "Электроника и атмосфера.",
+      "createdAt": "2026-03-29T07:01:43.862Z",
+      "updatedAt": "2026-03-29T07:01:43.862Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd85",
+      "name": "Velvet Grove",
+      "image": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400",
+      "bio": "Соул и джаз.",
+      "createdAt": "2026-03-29T07:01:43.878Z",
+      "updatedAt": "2026-03-29T07:01:43.878Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd8d",
+      "name": "Northline",
+      "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400",
+      "bio": "Инди-рок.",
+      "createdAt": "2026-03-29T07:01:43.883Z",
+      "updatedAt": "2026-03-29T07:01:43.883Z",
+      "__v": 0
+    }
+  ],
+  "albums": [
+    {
+      "_id": "69c8ce57f4a47e20fb15bd7f",
+      "title": "Ночные волны",
+      "coverUrl": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600",
+      "year": 2023,
+      "genre": "Electronic",
+      "artist": "69c8ce57f4a47e20fb15bd7d",
+      "createdAt": "2026-03-29T07:01:43.874Z",
+      "updatedAt": "2026-03-29T07:01:43.874Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd87",
+      "title": "Зелёный свет",
+      "coverUrl": "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600",
+      "year": 2022,
+      "genre": "Soul",
+      "artist": "69c8ce57f4a47e20fb15bd85",
+      "createdAt": "2026-03-29T07:01:43.880Z",
+      "updatedAt": "2026-03-29T07:01:43.880Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd8f",
+      "title": "Горизонт",
+      "coverUrl": "https://images.unsplash.com/photo-1498038432885-c6f3b84b8c73?w=600",
+      "year": 2024,
+      "genre": "Indie",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-03-29T07:01:43.884Z",
+      "updatedAt": "2026-03-29T07:01:43.884Z",
+      "__v": 0
+    }
+  ],
+  "tracks": [
+    {
+      "_id": "69c8ce57f4a47e20fb15bd81",
+      "title": "Intro",
+      "durationSec": 180,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "order": 0,
+      "album": "69c8ce57f4a47e20fb15bd7f",
+      "artist": "69c8ce57f4a47e20fb15bd7d",
+      "createdAt": "2026-03-29T07:01:43.876Z",
+      "updatedAt": "2026-03-29T07:01:43.876Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd83",
+      "title": "Pulse",
+      "durationSec": 210,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      "order": 1,
+      "album": "69c8ce57f4a47e20fb15bd7f",
+      "artist": "69c8ce57f4a47e20fb15bd7d",
+      "createdAt": "2026-03-29T07:01:43.877Z",
+      "updatedAt": "2026-03-29T07:01:43.877Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd89",
+      "title": "Первый лист",
+      "durationSec": 195,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+      "order": 0,
+      "album": "69c8ce57f4a47e20fb15bd87",
+      "artist": "69c8ce57f4a47e20fb15bd85",
+      "createdAt": "2026-03-29T07:01:43.881Z",
+      "updatedAt": "2026-03-29T07:01:43.881Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd8b",
+      "title": "Сад",
+      "durationSec": 240,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+      "order": 1,
+      "album": "69c8ce57f4a47e20fb15bd87",
+      "artist": "69c8ce57f4a47e20fb15bd85",
+      "createdAt": "2026-03-29T07:01:43.882Z",
+      "updatedAt": "2026-03-29T07:01:43.882Z",
+      "__v": 0
+    },
+    {
+      "_id": "69c8ce57f4a47e20fb15bd91",
+      "title": "Поезд",
+      "durationSec": 200,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+      "order": 0,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-03-29T07:01:43.885Z",
+      "updatedAt": "2026-03-29T07:01:43.885Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2dfd",
+      "title": "Осколки",
+      "durationSec": 212,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+      "order": 1,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.839Z",
+      "updatedAt": "2026-04-01T12:06:25.839Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2dff",
+      "title": "Тёплый шум",
+      "durationSec": 188,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+      "order": 2,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.847Z",
+      "updatedAt": "2026-04-01T12:06:25.847Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e01",
+      "title": "Дыхание",
+      "durationSec": 204,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+      "order": 3,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.849Z",
+      "updatedAt": "2026-04-01T12:06:25.849Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e03",
+      "title": "Линии",
+      "durationSec": 236,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+      "order": 4,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.851Z",
+      "updatedAt": "2026-04-01T12:06:25.851Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e05",
+      "title": "Свет в окне",
+      "durationSec": 193,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+      "order": 5,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.853Z",
+      "updatedAt": "2026-04-01T12:06:25.853Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e07",
+      "title": "После дождя",
+      "durationSec": 221,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
+      "order": 6,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.855Z",
+      "updatedAt": "2026-04-01T12:06:25.855Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e09",
+      "title": "Северный ветер",
+      "durationSec": 247,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
+      "order": 7,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.856Z",
+      "updatedAt": "2026-04-01T12:06:25.856Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e0b",
+      "title": "Река",
+      "durationSec": 199,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+      "order": 8,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.858Z",
+      "updatedAt": "2026-04-01T12:06:25.858Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e0d",
+      "title": "Пульс города",
+      "durationSec": 215,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3",
+      "order": 9,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.860Z",
+      "updatedAt": "2026-04-01T12:06:25.860Z",
+      "__v": 0
+    },
+    {
+      "_id": "69cd0a411fb58700586b2e0f",
+      "title": "Тишина",
+      "durationSec": 176,
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+      "order": 10,
+      "album": "69c8ce57f4a47e20fb15bd8f",
+      "artist": "69c8ce57f4a47e20fb15bd8d",
+      "createdAt": "2026-04-01T12:06:25.861Z",
+      "updatedAt": "2026-04-01T12:06:25.861Z",
+      "__v": 0
+    }
+  ]
+}

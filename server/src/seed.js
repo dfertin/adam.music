@@ -1,5 +1,8 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { connectDb } from './db.js';
 import { Artist } from './models/Artist.js';
 import { Album } from './models/Album.js';
@@ -85,32 +88,31 @@ async function seed() {
     process.exit(1);
   }
   await connectDb(uri);
-  const n = await Artist.countDocuments();
-  if (n > 0) {
-    console.log('Данные уже есть — seed пропущен.');
+
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const dataPath = path.join(__dirname, 'seed_data.json');
+
+  if (!fs.existsSync(dataPath)) {
+    console.log('Файл seed_data.json не найден. Используем 0 треков или заливаем стандартные...');
     await mongoose.disconnect();
     return;
   }
 
-  let order = 0;
-  for (const block of demos) {
-    const artist = await Artist.create(block.artist);
-    const album = await Album.create({
-      ...block.album,
-      artist: artist._id,
-    });
-    for (let i = 0; i < block.tracks.length; i += 1) {
-      const t = block.tracks[i];
-      order += 1;
-      await Track.create({
-        ...t,
-        order: i,
-        album: album._id,
-        artist: artist._id,
-      });
-    }
-  }
-  console.log('Seed готов: артисты, альбомы и треки добавлены.');
+  const raw = fs.readFileSync(dataPath, 'utf-8');
+  const data = JSON.parse(raw);
+
+  console.log('Удаляем всё из базы...');
+  await Artist.deleteMany({});
+  await Album.deleteMany({});
+  await Track.deleteMany({});
+
+  console.log('Заливаем локальные данные в облако...');
+  if (data.artists?.length) await Artist.insertMany(data.artists);
+  if (data.albums?.length) await Album.insertMany(data.albums);
+  if (data.tracks?.length) await Track.insertMany(data.tracks);
+
+  console.log(`Seed готов: ${data.tracks?.length} треков добавлено в облако!`);
   await mongoose.disconnect();
 }
 
