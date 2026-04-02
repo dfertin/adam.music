@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { connectDb } from './db.js';
 import { authRouter } from './routes/auth.js';
 import { albumsRouter } from './routes/albums.js';
@@ -17,7 +19,11 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+    origin: [
+      'http://localhost:3000', 'http://127.0.0.1:3000',
+      'http://localhost:3001', 'http://127.0.0.1:3001',
+      'http://localhost:3002', 'http://127.0.0.1:3002'
+    ],
     credentials: true,
   })
 );
@@ -36,6 +42,16 @@ app.use('/api/reviews', reviewsRouter);
 app.use('/api/playlists', playlistsRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/stats', statsRouter);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const clientBuildPath = path.join(__dirname, '../../client/dist');
+
+app.use(express.static(clientBuildPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
 
 app.use((err, _req, res, _next) => {
   console.error(err);
