@@ -1,4 +1,4 @@
-const API_PREFIX = 'https://adam-music-20.onrender.com/api';
+const API_PREFIX = '/api';
 
 export async function api(path, options = {}) {
   const headers = { ...(options.headers || {}) };
