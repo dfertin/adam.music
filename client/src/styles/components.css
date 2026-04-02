@@ -906,12 +906,30 @@ a.adam-card:hover {
 }
 
 .track-row {
-  padding: 0.5rem 0;
+  padding: 0.6rem 1rem;
   border-bottom: 1px solid var(--adam-border);
   display: flex;
   justify-content: space-between;
   gap: 0.7rem;
   align-items: center;
+  border-radius: 8px;
+}
+
+.track-row__name {
+  display: block;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-row__artist {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--adam-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .track-row__title-btn {
@@ -922,12 +940,35 @@ a.adam-card:hover {
   color: inherit;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .track-row__actions {
   display: flex;
   gap: 0.35rem;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.track-row > span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.track-row .album-card-title {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-row .muted-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .library-top-gap {

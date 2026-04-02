@@ -240,22 +240,30 @@ export default function Library() {
       </section>
 
       <section>
-        <h2 className="adam-h2">
-          Избранное
-        </h2>
+        <h2 className="adam-h2">Избранное</h2>
         <ul className="plain-list">
           {favorites.map((f) => {
             const t = f.track;
             if (!t) return null;
             return (
               <li key={f._id} className="track-row adam-card">
-                <span>
-                  <span className="album-card-title">{t.title}</span>
-                  <span className="muted-text"> — {t.artist?.name}</span>
-                </span>
-                <button type="button" className="adam-btn adam-btn--ghost adam-btn--xs" onClick={() => playTrack(t, [t])}>
-                  ▶
+                <button
+                  type="button"
+                  className="track-row__title-btn"
+                  onClick={() => playTrack(t, [t])}
+                >
+                  <span className="track-row__name">{t.title}</span>
+                  <span className="track-row__artist">{t.artist?.name}</span>
                 </button>
+                <div className="track-row__actions">
+                  <button
+                    type="button"
+                    className="adam-btn adam-btn--ghost adam-btn--xs"
+                    onClick={() => playTrack(t, [t])}
+                  >
+                    ▶
+                  </button>
+                </div>
               </li>
             );
           })}

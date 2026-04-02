@@ -13,7 +13,7 @@ import { searchRouter } from './routes/search.js';
 import { statsRouter } from './routes/stats.js';
 
 const app = express();
-const PORT = Number(process.env.PORT) || 5000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(
   cors({
