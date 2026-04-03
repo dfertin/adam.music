@@ -39,8 +39,8 @@ npm run dev:server
 npm run dev:client
 ```
 После запуска
-Клиент [http://localhost:3000](http://localhost:3000)
-Сервер [http://localhost:5000](http://localhost:5000)
+Клиент [http://localhost:3000](http://localhost:3001)
+Сервер [http://localhost:5000](http://localhost:3000)
 
 ## Environment (server/.env)
 Нужно создать файл `server/.env` и прописать
@@ -48,7 +48,7 @@ npm run dev:client
 ```env
 MONGODB_URI=your_mongodb_connection_string  
 JWT_SECRET=your_secret_key  
-PORT=5000  
+PORT=3000  
 ```
 
 ## Заполнение базы (демо данные)
@@ -70,7 +70,7 @@ npm run seed
 
 ## API Documentation (кратко)
 
-Base URL: http://localhost:5000/api  
+Base URL: http://localhost:3000/api  
 
 Если эндпоинт требует авторизацию, нужно передавать токен в header:  
 Authorization: Bearer <token>  
